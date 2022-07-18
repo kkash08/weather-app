@@ -151,6 +151,10 @@ footer {
   font-weight: 700;
 }
 
+.github-link {
+  color: wheat;
+}
+
 /* .search-btn {  
   width: 100px;
   height: 40px;
