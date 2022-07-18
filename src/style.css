@@ -155,7 +155,18 @@ footer {
   color: wheat;
 }
 
-/* .search-btn {  
-  width: 100px;
-  height: 40px;
-} */
+.rain {
+  color: #b7eaf7;
+}
+
+.snow {
+  color: wheat;
+}
+
+.haze {
+  color: gray;
+}
+
+.cloud {
+  color: whitesmoke;
+}

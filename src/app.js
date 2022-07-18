@@ -19,12 +19,26 @@ let displayDate = `${days[now.getDay()]} ${now.getHours()}:${currentMinute}`;
 dateLabel.innerHTML = displayDate;
 
 function handleTemp(response) {
-  console.log(response);
   let cityName = response.data.name;
   let curTemp = Math.round(response.data.main.temp);
   let description = response.data.weather[0].main;
   let windSpeed = Math.round(response.data.wind.speed);
   let humidity = Math.round(response.data.main.humidity);
+  let condition = response.data.weather[0].id;
+  let imgWeather = document.querySelector(".icon-container");
+  if (condition < 600) {
+    imgWeather.innerHTML =
+      '<i class="fa-solid fa-cloud-rain weather-icon rain"></i>';
+  } else if (condition >= 600 && condition <= 700) {
+    imgWeather.innerHTML =
+      '<i class="fa-solid fa-snowflake weather-icon snow">';
+  } else if (condition > 800) {
+    imgWeather.innerHTML = '<i class="fa-solid fa-cloud weather-icon cloud">';
+  } else if (condition > 700 && condition < 800) {
+    imgWeather.innerHTML = '<i class="fa-solid fa-smog weather-icon haze"></i>';
+  } else if (condition === 800) {
+    imgWeather.innerHTML = '<i class="fa-solid fa-sun weather-icon"></i>';
+  }
   let placeLabel = document.querySelector("#place-name");
   placeLabel.innerHTML = `📍${cityName}`;
   let tempLabel = document.querySelector("#temp-label");
