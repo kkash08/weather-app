@@ -48,7 +48,7 @@ function handleTemp(response) {
   let windSpeedLabel = document.querySelector("#wind-speed-label");
   let dateLabel = document.querySelector("#today-date-text");
   placeLabel.innerHTML = `📍${response.data.name}`;
-  tempLabel.innerHTML = `${Math.round(response.data.main.temp)}°`;
+  tempLabel.innerHTML = `${Math.round(response.data.main.temp)}`;
   descLabel.innerHTML = `${response.data.weather[0].main}`;
   windSpeedLabel.innerHTML = `🌬${Math.round(response.data.wind.speed)}km/h`;
   humidityLabel.innerHTML = `🌧${Math.round(response.data.main.humidity)}%`;
@@ -63,6 +63,7 @@ function getTemp(cityName) {
 
 function getPlace(event) {
   event.preventDefault();
+  isDegreeCelcius = true;
   let cityInput = document.querySelector("#search-input");
   let cityText = cityInput.value;
   getTemp(cityText);
@@ -81,7 +82,33 @@ function getUserLocation() {
   navigator.geolocation.getCurrentPosition(obtainPosition);
 }
 
+let isDegreeCelcius = true;
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", getPlace);
 let locateBtn = document.querySelector(".locate-btn");
 locateBtn.addEventListener("click", getUserLocation);
+
+let celciusLink = document.querySelector("#celcius");
+let farenheitLink = document.querySelector("#farenheit");
+
+function showFarenheit() {
+  if (isDegreeCelcius === true) {
+    let tempLabel = document.querySelector("#temp-label");
+    let tempEle = tempLabel.innerHTML;
+    let farenDeg = (tempEle * 9) / 5 + 32;
+    tempLabel.innerHTML = Math.round(farenDeg);
+    isDegreeCelcius = false;
+  }
+}
+farenheitLink.addEventListener("click", showFarenheit);
+
+function showCelcius() {
+  if (isDegreeCelcius === false) {
+    let tempLabel = document.querySelector("#temp-label");
+    let tempEle = tempLabel.innerHTML;
+    let celDeg = (5 * (tempEle - 32)) / 9;
+    tempLabel.innerHTML = Math.round(celDeg);
+    isDegreeCelcius = true;
+  }
+}
+celciusLink.addEventListener("click", showCelcius);
