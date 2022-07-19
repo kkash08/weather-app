@@ -27,12 +27,14 @@ function formatDate(timestamp) {
 
 function showForecast(response) {
   console.log(response);
+  let j = 1;
   let daysForecast = [];
   let tempForecastElements = document.querySelectorAll("#forecast-temp");
   for (let i = 0; i < 6; i++) {
     tempForecastElements[i].innerHTML = `${Math.round(
-      response.data.daily[i].temp.day
+      response.data.daily[j].temp.day
     )}°`;
+    j += 1;
   }
 
   console.log(daysForecast);
