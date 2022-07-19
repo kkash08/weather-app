@@ -1,29 +1,31 @@
 // Displaying current date and time
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-let dateLabel = document.querySelector("#today-date-text");
-let now = new Date();
-let minutes = now.getMinutes();
-let currentMinute = minutes;
-if (minutes < 10) {
-  currentMinute = `0${minutes}`;
+function formatDate(timestamp) {
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let now = new Date(timestamp);
+  let minutes = now.getMinutes();
+  let currentMinute = minutes;
+  if (minutes < 10) {
+    currentMinute = `0${minutes}`;
+  }
+  let hours = now.getHours();
+  let currentHour = hours;
+  if (hours < 10) {
+    currentHour = `0${hours}`;
+  }
+  let displayDate = `${days[now.getDay()]} ${currentHour}:${currentMinute}`;
+  return displayDate;
 }
-let displayDate = `${days[now.getDay()]} ${now.getHours()}:${currentMinute}`;
-dateLabel.innerHTML = displayDate;
 
 function handleTemp(response) {
-  let cityName = response.data.name;
-  let curTemp = Math.round(response.data.main.temp);
-  let description = response.data.weather[0].main;
-  let windSpeed = Math.round(response.data.wind.speed);
-  let humidity = Math.round(response.data.main.humidity);
+  console.log(response);
   let condition = response.data.weather[0].id;
   let imgWeather = document.querySelector(".icon-container");
   if (condition < 600) {
@@ -40,15 +42,17 @@ function handleTemp(response) {
     imgWeather.innerHTML = '<i class="fa-solid fa-sun weather-icon"></i>';
   }
   let placeLabel = document.querySelector("#place-name");
-  placeLabel.innerHTML = `📍${cityName}`;
   let tempLabel = document.querySelector("#temp-label");
-  tempLabel.innerHTML = `${curTemp}°`;
   let descLabel = document.querySelector("#label-today");
-  descLabel.innerHTML = `${description}`;
   let humidityLabel = document.querySelector("#humidity-label");
-  humidityLabel.innerHTML = `🌧${humidity}%`;
   let windSpeedLabel = document.querySelector("#wind-speed-label");
-  windSpeedLabel.innerHTML = `🌬${windSpeed}km/h`;
+  let dateLabel = document.querySelector("#today-date-text");
+  placeLabel.innerHTML = `📍${response.data.name}`;
+  tempLabel.innerHTML = `${Math.round(response.data.main.temp)}°`;
+  descLabel.innerHTML = `${response.data.weather[0].main}`;
+  windSpeedLabel.innerHTML = `🌬${Math.round(response.data.wind.speed)}km/h`;
+  humidityLabel.innerHTML = `🌧${Math.round(response.data.main.humidity)}%`;
+  dateLabel.innerHTML = formatDate(response.data.dt * 1000);
 }
 
 function getTemp(cityName) {
