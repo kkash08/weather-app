@@ -26,6 +26,9 @@ function formatDate(timestamp) {
 
 function handleTemp(response) {
   console.log(response);
+  isDegreeCelcius = true;
+  farenheitLink.classList.remove("active");
+  celciusLink.classList.add("active");
   let condition = response.data.weather[0].id;
   let imgWeather = document.querySelector(".icon-container");
   if (condition < 600) {
@@ -63,7 +66,6 @@ function getTemp(cityName) {
 
 function getPlace(event) {
   event.preventDefault();
-  isDegreeCelcius = true;
   let cityInput = document.querySelector("#search-input");
   let cityText = cityInput.value;
   getTemp(cityText);
@@ -91,8 +93,11 @@ locateBtn.addEventListener("click", getUserLocation);
 let celciusLink = document.querySelector("#celcius");
 let farenheitLink = document.querySelector("#farenheit");
 
-function showFarenheit() {
+function showFarenheit(event) {
+  event.preventDefault();
   if (isDegreeCelcius === true) {
+    farenheitLink.classList.add("active");
+    celciusLink.classList.remove("active");
     let tempLabel = document.querySelector("#temp-label");
     let tempEle = tempLabel.innerHTML;
     let farenDeg = (tempEle * 9) / 5 + 32;
@@ -102,8 +107,11 @@ function showFarenheit() {
 }
 farenheitLink.addEventListener("click", showFarenheit);
 
-function showCelcius() {
+function showCelcius(event) {
+  event.preventDefault();
   if (isDegreeCelcius === false) {
+    farenheitLink.classList.remove("active");
+    celciusLink.classList.add("active");
     let tempLabel = document.querySelector("#temp-label");
     let tempEle = tempLabel.innerHTML;
     let celDeg = (5 * (tempEle - 32)) / 9;

@@ -28,6 +28,11 @@ footer {
   text-decoration: underline;
 }
 
+.active:hover {
+  text-decoration: none;
+  cursor: default;
+}
+
 .search-input {
   border: none;
   border-radius: 5px;
